@@ -139,3 +139,17 @@ def silver_pohlig_hellman(alpha, beta, n):
         return x % N
 
     return chinese_remainder_theorem(congruences)
+
+
+
+alpha = 274228
+beta = 924154
+n = 10596841
+
+start = time.time()
+x = silver_pohlig_hellman(alpha, beta, n)
+end = time.time()
+elapsed = end - start
+print(f"x = {x}, перевірка: {alpha}^{x} ≡ {pow(alpha, x, n)} ≡ {beta} mod {n}")
+print(f"Час виконання: {elapsed:.6f} секунд")
+
