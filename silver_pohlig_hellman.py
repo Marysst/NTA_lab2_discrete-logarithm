@@ -128,3 +128,14 @@ def silver_pohlig_hellman(alpha, beta, n):
 
         x_pi = sum(x_digits[i] * pow(p, i) for i in range(l))
         congruences.append((x_pi, pi_power))
+
+    def chinese_remainder_theorem(congruences):
+        x = 0
+        N = reduce(lambda a, b: a * b, [mod for _, mod in congruences])
+        for residue, modulus in congruences:
+            Ni = N // modulus
+            Mi = mod_inverse(Ni, modulus)
+            x += residue * Ni * Mi
+        return x % N
+
+    return chinese_remainder_theorem(congruences)
