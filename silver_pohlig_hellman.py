@@ -89,3 +89,7 @@ def full_pollard_factorization(n):
 
     factorize(n)
     return sorted(factors)
+
+def canonical_factorization(n):
+    factors = full_pollard_factorization(n)
+    return dict(Counter(factors))
