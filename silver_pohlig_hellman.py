@@ -100,3 +100,31 @@ def mod_inverse(a, m):
         raise ValueError(f"Оберненого до {a} по модулю {m} не існує")
     return x % m
 
+def silver_pohlig_hellman(alpha, beta, n):
+    factors = canonical_factorization(n)
+    congruences = []
+
+    for p, l in factors.items():
+        pi_power = p ** l
+        e = n // pi_power
+
+        table = {pow(alpha, e * j, n): j for j in range(p)}
+        x_digits = []
+        b = pow(beta, e, n)
+
+        for k in range(l):
+            denom = p ** (l - k)
+            acc = 1
+            for j in range(k):
+                acc = (acc * pow(alpha, x_digits[j] * pow(p, j) * n // denom, n)) % n
+
+            b_k = (pow(b, n // denom, n) * mod_inverse(acc, n)) % n
+            d_k = table.get(b_k)
+
+            if d_k is None:
+                raise ValueError(f"Не знайдено в таблиці для p = {p}, k = {k}")
+
+            x_digits.append(d_k)
+
+        x_pi = sum(x_digits[i] * pow(p, i) for i in range(l))
+        congruences.append((x_pi, pi_power))
