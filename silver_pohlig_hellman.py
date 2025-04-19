@@ -93,3 +93,10 @@ def full_pollard_factorization(n):
 def canonical_factorization(n):
     factors = full_pollard_factorization(n)
     return dict(Counter(factors))
+
+def mod_inverse(a, m):
+    g, x, _ = gcd_ext(a, m, extended=True)
+    if g != 1:
+        raise ValueError(f"Оберненого до {a} по модулю {m} не існує")
+    return x % m
+
