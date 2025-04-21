@@ -159,7 +159,7 @@ def save_to_csv(alpha, beta, p, x, runtime, problem_type, digit_length, filename
 
 if __name__ == "__main__":
     if len(sys.argv) != 6:
-        print("Usage: python brute_logger.py <problem_type> <digit_length> <alpha> <beta> <p>")
+        print("Usage: python silver_pohlig_hellman_analyze_runtime.py <problem_type> <digit_length> <alpha> <beta> <p>")
         sys.exit(1)
 
     problem_type = int(sys.argv[1])
