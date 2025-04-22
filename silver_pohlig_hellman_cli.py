@@ -143,7 +143,7 @@ def silver_pohlig_hellman(alpha, beta, n):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: python brute_log.py <alpha> <beta> <p>")
+        print("Usage: python silver_pohlig_hellman_cli.py <alpha> <beta> <p>")
         sys.exit(1)
 
     alpha = int(sys.argv[1])
