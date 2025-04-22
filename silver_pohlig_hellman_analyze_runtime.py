@@ -143,27 +143,27 @@ def silver_pohlig_hellman(alpha, beta, n):
 
     return chinese_remainder_theorem(congruences)
 
-def save_to_csv(alpha, beta, p, x, runtime, problem_type, digit_length, filename="silver_pohlig_hellman_results.csv"):
+def save_to_csv(alpha, beta, p, x, runtime, problem_type, order_prime_number, filename="silver_pohlig_hellman_results.csv"):
     file_exists = os.path.isfile(filename)
     with open(filename, mode="a", newline="") as file:
         writer = csv.writer(file)
         if not file_exists:
             writer.writerow([
-                "problem_type", "digit_length", "alpha", "beta",
+                "problem_type", "order_prime_number", "alpha", "beta",
                 "prime_order_p", "result_x", "time_seconds"
             ])
         writer.writerow([
-            problem_type, digit_length, alpha, beta,
+            problem_type, order_prime_number, alpha, beta,
             p, x if x is not None else "timeout", runtime
         ])
 
 if __name__ == "__main__":
     if len(sys.argv) != 6:
-        print("Usage: python silver_pohlig_hellman_analyze_runtime.py <problem_type> <digit_length> <alpha> <beta> <p>")
+        print("Usage: python silver_pohlig_hellman_analyze_runtime.py <problem_type> <order_prime_number> <alpha> <beta> <p>")
         sys.exit(1)
 
     problem_type = int(sys.argv[1])
-    digit_length = int(sys.argv[2])
+    order_prime_number = int(sys.argv[2])
     alpha = int(sys.argv[3])
     beta = int(sys.argv[4])
     n = int(sys.argv[5])
@@ -175,7 +175,7 @@ if __name__ == "__main__":
         elapsed = end - start
         print(f"x = {x}, перевірка: {alpha}^{x} ≡ {pow(alpha, x, n)} ≡ {beta} mod {n}")
         print(f"Час виконання: {elapsed:.6f} секунд")
-        save_to_csv(alpha, beta, n, x, elapsed, problem_type, digit_length)
+        save_to_csv(alpha, beta, n, x, elapsed, problem_type, order_prime_number)
     except TimeoutError as e:
         print(e)
-        save_to_csv(alpha, beta, n, None, 300.0, problem_type, digit_length)
+        save_to_csv(alpha, beta, n, None, 300.0, problem_type, order_prime_number)
